@@ -30,8 +30,25 @@
     input.focus();
   }
 
+  function isStreamUrl(url) {
+    return /\.(m3u8|flv|mp4|mpd)(\?.*)?$/i.test(url);
+  }
+
+  function showHint(text) {
+    var tip = document.createElement('div');
+    tip.style.cssText = 'position:absolute;inset:auto 0 84px 0;text-align:center;color:#ffb4a2;font-size:13px;font-family:"Microsoft YaHei",sans-serif;padding:0 20px;';
+    tip.textContent = text;
+    document.body.appendChild(tip);
+  }
+
   if (!vurl) {
     showForm();
+    return;
+  }
+
+  if (!isStreamUrl(vurl)) {
+    showForm();
+    showHint('这不是流地址。请填 m3u8 / flv / mp4 直链；抖音、快手等平台的分享链接无法直接播放。');
     return;
   }
 
