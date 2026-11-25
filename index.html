@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>道玄微数 · 开源直播播放器</title>
+<meta name="description" content="道玄微数科技信息有限公司开源直播播放器：HLS 在线播放、M3U8 网页下载、TXT 转 M3U 工具。">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    background: radial-gradient(1200px 600px at 20% 0%, #14313d 0%, #0b1620 45%, #070d13 100%);
+    color: #e6edf3; font-family: 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+    display: flex; flex-direction: column;
+  }
+  header { padding: 56px 24px 24px; text-align: center; }
+  h1 { margin: 0 0 10px; font-size: 30px; letter-spacing: 1px; }
+  .sub { color: #8aa0b0; font-size: 14px; }
+  main { flex: 1; width: min(1000px, 92vw); margin: 24px auto 0; }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  a.card {
+    display: block; padding: 22px; border-radius: 14px; text-decoration: none;
+    background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.09);
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  a.card:hover { transform: translateY(-3px); border-color: #2f81f7; background: rgba(47,129,247,.10); }
+  .card h2 { margin: 0 0 8px; font-size: 17px; color: #e6edf3; }
+  .card p { margin: 0; font-size: 13px; line-height: 1.7; color: #8aa0b0; }
+  footer { padding: 28px 24px 36px; text-align: center; color: #6e8494; font-size: 13px; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>道玄微数 · 开源直播播放器</h1>
+    <div class="sub">HLS 在线播放 · M3U8 网页下载 · TXT 转 M3U</div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <a class="card" href="./player/">
+        <h2>直播播放器</h2>
+        <p>基于 hls.js 的网页播放器，支持 m3u8 / flv / dash。</p>
+      </a>
+      <a class="card" href="./player/hls.html">
+        <h2>HLS 播放器</h2>
+        <p>轻量播放页，传 m3u8 地址直接播放。</p>
+      </a>
+      <a class="card" href="./m3u8/">
+        <h2>M3U8 下载器</h2>
+        <p>浏览器内抓取分片、解密、合并为 MP4，无需安装软件。</p>
+      </a>
+      <a class="card" href="./txt2m3u/">
+        <h2>TXT 转 M3U</h2>
+        <p>把频道列表批量转换为标准 M3U 播放列表。</p>
+      </a>
+    </div>
+  </main>
+
+  <footer>道玄微数科技信息有限公司 · 开源学习用途</footer>
+</body>
+</html>
