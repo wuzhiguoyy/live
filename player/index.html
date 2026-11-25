@@ -13,10 +13,46 @@
 <video id="player-container-id" style="width:100%;height:100%" preload="auto" playsinline webkit-playsinline></video>
 <div id="daoxuan-watermark" style="position:absolute;right:16px;top:16px;z-index:999;color:rgba(255,255,255,.75);font-size:13px;font-family:'Microsoft YaHei',sans-serif;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.6)">道玄微数科技信息有限公司</div>
 <script>
-playurl = location.href.split('?vurl=')[1];
-var player = TCPlayer('player-container-id', {});
-player.src(playurl);
-player.autoplay(1);
+(function () {
+  var vurl = new URLSearchParams(location.search).get('vurl');
+
+  function showForm() {
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#000;color:#e6edf3;font-family:"Microsoft YaHei",sans-serif;padding:24px;text-align:center;';
+    wrap.innerHTML = ''
+      + '<div style="font-size:16px">输入直播 / 点播地址</div>'
+      + '<input id="dx-url" placeholder="https://example.com/live.m3u8" '
+      + 'style="width:min(560px,90vw);padding:10px 12px;border-radius:8px;border:1px solid #2f81f7;background:#0d1620;color:#e6edf3;outline:none">'
+      + '<button id="dx-play" style="padding:9px 22px;border-radius:8px;border:0;background:#2f81f7;color:#fff;cursor:pointer">播放</button>'
+      + '<div style="font-size:12px;color:#7d93a5">道玄微数科技信息有限公司</div>';
+    document.body.appendChild(wrap);
+
+    var input = document.getElementById('dx-url');
+    var button = document.getElementById('dx-play');
+    function play() {
+      var url = (input.value || '').trim();
+      if (!url) {
+        input.focus();
+        return;
+      }
+      location.search = '?vurl=' + encodeURIComponent(url);
+    }
+    button.addEventListener('click', play);
+    input.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') play();
+    });
+    input.focus();
+  }
+
+  if (!vurl) {
+    showForm();
+    return;
+  }
+
+  var player = TCPlayer('player-container-id', {});
+  player.src(vurl);
+  player.autoplay(1);
+})();
 </script>
 </body>
 </html>
