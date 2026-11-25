@@ -109,6 +109,8 @@ def classify(name):
         return "央视高清"
     if "卫视" in name:
         return "卫视高清"
+    if "CGTN" in name.upper():
+        return "国际频道"
     if any(word in name for word in HMT_WORDS):
         return "港澳台"
     return "地方频道"
@@ -128,6 +130,9 @@ def logo_for(name, tv_dir):
     return ""
 
 
+GROUP_ORDER = {"央视高清": 0, "卫视高清": 1, "国际频道": 2, "港澳台": 3, "地方频道": 4}
+
+
 def sort_key(entry):
     group, name, key = entry[0], entry[1], entry[5]
     if group == "央视高清":
@@ -136,20 +141,19 @@ def sort_key(entry):
     if group == "卫视高清":
         order = SATELLITE_ORDER.index(name) if name in SATELLITE_ORDER else 99
         return (1, order, name)
-    if group == "港澳台":
-        return (2, 99, name)
-    return (3, 99, name)
+    return (GROUP_ORDER.get(group, 9), 0, name)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("source", help="检测后的 m3u")
+    parser.add_argument("source", nargs="+", help="一个或多个 m3u 文件（按顺序合并）")
     parser.add_argument("-o", "--output", default="tv/m3u/index.m3u")
     args = parser.parse_args()
 
     tv_dir = Path(args.output).resolve().parent.parent
-    text = read_text_any(args.source)
-    items = parse_m3u(text)
+    items = []
+    for source in args.source:
+        items.extend(parse_m3u(read_text_any(source)))
 
     seen = set()
     entries = []
